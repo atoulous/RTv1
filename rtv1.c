@@ -1,0 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rtv1.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/09/27 20:06:17 by atoulous          #+#    #+#             */
+/*   Updated: 2016/09/29 15:43:55 by atoulous         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "rtv1.h"
+
+void	fill_image(t_var *var, int x, int y, int color)
+{
+	unsigned int	r;
+	unsigned int	g;
+	unsigned int	b;
+
+	r = color >> 0;
+	g = color >> 8;
+	b = color >> 16;
+	if (x >= 0 && x < WIDTH_WIN && y >= 0 && y < HEIGHT_WIN)
+	{
+		DATA[y * SIZELINE + x * (BPP / 8)] = r;
+		DATA[y * SIZELINE + x * (BPP / 8) + 1] = g;
+		DATA[y * SIZELINE + x * (BPP / 8) + 2] = b;
+	}
+}
+
+void	init_raytracing(t_var *var)
+{
+}
+
+void	init_environnement(t_var *var)
+{
+	WIDTH_WIN = 1024;
+	HEIGHT_WIN = 768;
+	MLX = mlx_init();
+	WIN = mlx_new_window(MLX, WIDTH_WIN, HEIGHT_WIN, "RTV1");
+	IMG = mlx_new_image(MLX, WIDTH_WIN, HEIGHT_WIN);
+	DATA = mlx_get_data_addr(IMG, &BPP, &SIZELINE, &ENDIAN);
+	init_raytracing(var);
+}
+
+void	rtv1(void)
+{
+	t_var *var;
+
+	if (!(var = (t_var *)ft_memalloc(sizeof(t_var))))
+		exit(EXIT_FAILURE);
+	if (!(var->ray = (t_ray *)ft_memalloc(sizeof(t_ray))))
+		exit(EXIT_FAILURE);
+	init_environnement(var);
+	mlx_loop_hook(MLX, launch_rtv1, var);
+	mlx_hook(WIN, KeyPress, KeyPressMask, ft_key, var);
+	mlx_hook(WIN, KeyRelease, KeyReleaseMask, ft_release, var);
+	mlx_hook(WIN, ButtonPress, ButtonPressMask, ft_mouse, var);
+	mlx_hook(WIN, MotionNotify, ButtonMotionMask, ft_motion_mouse, var);
+	mlx_hook(WIN, DestroyNotify, Button1MotionMask, ft_crossquit, var);
+	mlx_loop(MLX);
+}
+
+int		main(int ac, char **av)
+{
+	if (ac == 1)
+		rtv1();
+	return (0);
+}
