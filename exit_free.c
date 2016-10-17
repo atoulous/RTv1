@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 15:00:18 by atoulous          #+#    #+#             */
-/*   Updated: 2016/09/29 15:03:34 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/09/30 14:48:16 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	free_all(t_var *var)
 	MLX = NULL;
 	WIN = NULL;
 	IMG = NULL;
-	free(var->ray);
+	TH = -1;
+	while (++TH < NB_TH)
+		free(var->ray[TH]);
 	free(var);
 }

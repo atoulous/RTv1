@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:06:17 by atoulous          #+#    #+#             */
-/*   Updated: 2016/09/29 15:43:55 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/09/30 15:47:33 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@ void	fill_image(t_var *var, int x, int y, int color)
 	}
 }
 
-void	init_raytracing(t_var *var)
-{
-}
-
 void	init_environnement(t_var *var)
 {
 	WIDTH_WIN = 1024;
@@ -41,7 +37,10 @@ void	init_environnement(t_var *var)
 	WIN = mlx_new_window(MLX, WIDTH_WIN, HEIGHT_WIN, "RTV1");
 	IMG = mlx_new_image(MLX, WIDTH_WIN, HEIGHT_WIN);
 	DATA = mlx_get_data_addr(IMG, &BPP, &SIZELINE, &ENDIAN);
-	init_raytracing(var);
+	var->th = -1;
+	while (++TH < NB_TH)
+		if (!(var->ray[TH] = (t_ray *)ft_memalloc(sizeof(t_ray))))
+			exit(EXIT_FAILURE);
 }
 
 void	rtv1(void)
@@ -49,8 +48,6 @@ void	rtv1(void)
 	t_var *var;
 
 	if (!(var = (t_var *)ft_memalloc(sizeof(t_var))))
-		exit(EXIT_FAILURE);
-	if (!(var->ray = (t_ray *)ft_memalloc(sizeof(t_ray))))
 		exit(EXIT_FAILURE);
 	init_environnement(var);
 	mlx_loop_hook(MLX, launch_rtv1, var);
