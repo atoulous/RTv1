@@ -6,7 +6,7 @@
 #    By: atoulous <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/06/22 18:52:31 by atoulous          #+#    #+#              #
-#    Updated: 2016/06/22 19:05:03 by atoulous         ###   ########.fr        #
+#    Updated: 2016/10/19 18:22:28 by atoulous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,10 @@ all: $(NAME)
 	@cc -O2 -o $@ -c $?
 
 clean:
+	@rm -f $(OBJ) *~
+	@rm -f mlx_app
+
+fclean:
 	@rm -f $(NAME) $(OBJ) *~
 	@rm -f mlx_app
 

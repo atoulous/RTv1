@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:06:17 by atoulous          #+#    #+#             */
-/*   Updated: 2016/09/30 15:47:33 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/10/19 13:20:19 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	fill_image(t_var *var, int x, int y, int color)
 
 void	init_environnement(t_var *var)
 {
-	WIDTH_WIN = 1024;
-	HEIGHT_WIN = 768;
+	WIDTH_WIN = 1080;
+	HEIGHT_WIN = 800;
 	MLX = mlx_init();
 	WIN = mlx_new_window(MLX, WIDTH_WIN, HEIGHT_WIN, "RTV1");
 	IMG = mlx_new_image(MLX, WIDTH_WIN, HEIGHT_WIN);
@@ -43,13 +43,14 @@ void	init_environnement(t_var *var)
 			exit(EXIT_FAILURE);
 }
 
-void	rtv1(void)
+void	rtv1(fd)
 {
 	t_var *var;
 
 	if (!(var = (t_var *)ft_memalloc(sizeof(t_var))))
 		exit(EXIT_FAILURE);
 	init_environnement(var);
+	parse_doc(fd, var);
 	mlx_loop_hook(MLX, launch_rtv1, var);
 	mlx_hook(WIN, KeyPress, KeyPressMask, ft_key, var);
 	mlx_hook(WIN, KeyRelease, KeyReleaseMask, ft_release, var);
@@ -61,7 +62,14 @@ void	rtv1(void)
 
 int		main(int ac, char **av)
 {
-	if (ac == 1)
-		rtv1();
+	int		fd;
+
+	if (ac == 2)
+	{
+		fd = open(av[1], O_RDONLY);
+		if (fd > 0)
+			rtv1(fd);
+		close(fd);
+	}
 	return (0);
 }

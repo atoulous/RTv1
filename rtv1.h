@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:07:08 by atoulous          #+#    #+#             */
-/*   Updated: 2016/09/30 15:47:32 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/10/19 19:50:04 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include "Libs/libft/libft.h"
 # include "mlx.h"
+# include "X.h"
 # include <math.h>
 # include <pthread.h>
 # include <OpenCL/opencl.h>
-# include </System/Library/Frameworks/Tk.framework/Versions/8.5/Headers/X11/X.h>
 
 # define NB_TH 10
 
@@ -35,6 +35,16 @@
 # define FOC var->ray[TH]->foc
 
 /*
+** object param
+*/
+
+#define OBJ_STR var->object[OBJ]->str
+#define OBJ_NAME var->object[OBJ]->name
+#define OBJ_INTER var->object[OBJ]->inter
+#define OBJ_STR_COLOR var->object[OBJ]->str_color
+#define OBJ_COLOR var->object[OBJ]->color
+
+/*
 ** global environnement defines
 */
 
@@ -42,6 +52,12 @@
 # define WIN var->win
 # define IMG var->img
 # define DATA var->data
+# define DOC var->doc
+# define CPY var->cpy
+# define SCENE_NAME var->scene_name
+# define CAMERA var->camera
+# define RENDER var->render
+# define TAB_OBJECT var->tab_object
 # define BPP var->bpp
 # define SIZELINE var->sizeline
 # define ENDIAN var->endian
@@ -49,6 +65,8 @@
 # define HEIGHT_WIN var->height_win
 # define COLOR var->color
 # define TH var->th
+# define NB_OBJ var->nb_obj
+# define OBJ var->obj
 
 /*
 ** raytracing variables
@@ -66,6 +84,22 @@ typedef struct		s_ray
 }					t_ray;
 
 /*
+** object param
+*/
+
+typedef struct		s_obj
+{
+	char			*str;
+	char			*name;
+	char			*inter;
+	char			*str_color;
+	char			*red;
+	char			*green;
+	char			*blue;
+	int				color;
+}					t_obj;
+
+/*
 ** global environnement variables
 */
 
@@ -75,6 +109,12 @@ typedef struct		s_var
 	void			*win;
 	void			*img;
 	char			*data;
+	char			*doc;
+	char			*cpy;
+	char			*scene_name;
+	char			*camera;
+	char			*render;
+	char			**tab_object;
 	int				bpp;
 	int				sizeline;
 	int				endian;
@@ -82,11 +122,15 @@ typedef struct		s_var
 	int				height_win;
 	int				color;
 	int				th;
+	int				obj;
+	int				nb_obj;
 	struct s_ray	*ray[NB_TH];
+	struct s_obj	**object;
 }					t_var;
 
 void				fill_image(t_var *var, int x, int y, int color);
 void				free_all(t_var *var);
+void				parse_doc(int fd, t_var *var);
 int					launch_rtv1(t_var *var);
 int					ft_key(int keycode, t_var *var);
 int					ft_release(int keycode, t_var *var);

@@ -6,7 +6,7 @@
 #    By: atoulous <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/15 14:00:02 by atoulous          #+#    #+#              #
-#    Updated: 2016/06/28 11:54:16 by atoulous         ###   ########.fr        #
+#    Updated: 2016/10/19 18:22:29 by atoulous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,9 @@ SRC = ft_atoi.c ft_bzero.c ft_create2tab.c ft_exit.c ft_free2tab.c			\
 		ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c		\
 		ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c		\
 		ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c		\
-		ft_tolower.c ft_toupper.c ft_usage.c ft_strndup.c get_next_line.c \
-		ft_strjoinfree.c ft_itoa_base.c ft_convert_base.c ft_strdupfree.c
+		ft_tolower.c ft_toupper.c ft_usage.c ft_strndup.c get_next_line.c	\
+		ft_strjoinfree.c ft_itoa_base.c ft_convert_base.c ft_strdupfree.c	\
+		ft_nbstrstr.c ft_strtrimfree.c
 
 OBJ = $(SRC:.c=.o)
 
