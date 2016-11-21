@@ -6,7 +6,7 @@ scene {
 	name { demo_1 }
 
 	camera {
-		origin { 200.0 00.0 0.0 }
+		origin { 0 0 -100.0 }
 	}
 	render {
 		mlx_all_objects { 1080 800 }
@@ -15,25 +15,37 @@ scene {
 # les objets
 
 	object {
-		name { sphere }
+		name { sphere1 }
+		type { sphere }
 		inter {
-			sphere { 100.0 } }
+			size { 1.0 }
+			origin { 2.0 2.0 0.0 }
+		}
 		color {
-			rgb { 0xFF00 0x0000 0x0000 } }
+			rgb { 0xFFFFFF }
+		}
 	}
 	object {
-		name { plane }
+		name { plane1 }
+		type { plane }
 		inter {
-			sphere { 100.0 } }
+			size { 100.0 200.0 }
+			origin { -2.0 -2.0 0.0 }
+		}
 		color {
-			rgb { 0xFF00 0x0000 0x0000 } }
+			rgb { 0xFFFF00 }
+		}
 	}
 	object {
-		name { cone }
+		name { sphere2 }
+		type { spher }
 		inter {
-			sphere { 100.0 } }
+			size { 1.0 }
+			origin { 2.0 2.0 0.0 }
+		}
 		color {
-			rgb { 0xFF00 0x0000 0x0000 } }
+			rgb { 0xFF0000 }
+		}
 	}
 
 }

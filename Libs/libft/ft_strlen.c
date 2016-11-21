@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 15:06:40 by atoulous          #+#    #+#             */
-/*   Updated: 2016/03/21 19:23:41 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/11/01 18:36:47 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] && str)
+	while (str && str[i])
 		i++;
 	return (i);
 }

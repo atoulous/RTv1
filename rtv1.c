@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:06:17 by atoulous          #+#    #+#             */
-/*   Updated: 2016/10/19 13:20:19 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/11/21 18:32:15 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,35 @@ void	fill_image(t_var *var, int x, int y, int color)
 	}
 }
 
-void	init_environnement(t_var *var)
+void	init_variables(t_var *var)
 {
-	WIDTH_WIN = 1080;
-	HEIGHT_WIN = 800;
 	MLX = mlx_init();
 	WIN = mlx_new_window(MLX, WIDTH_WIN, HEIGHT_WIN, "RTV1");
 	IMG = mlx_new_image(MLX, WIDTH_WIN, HEIGHT_WIN);
 	DATA = mlx_get_data_addr(IMG, &BPP, &SIZELINE, &ENDIAN);
-	var->th = -1;
+	TH = -1;
 	while (++TH < NB_TH)
+	{
 		if (!(var->ray[TH] = (t_ray *)ft_memalloc(sizeof(t_ray))))
 			exit(EXIT_FAILURE);
+		var->ray[TH]->var = var;
+	}
+	var->cam_dir = unit_vector(fill_vector(-CAM_POS.x, -CAM_POS.y, -CAM_POS.z));
+	var->cam_up = fill_vector(0, 1, 0);
+	var->cam_right = unit_vector(perp_vectors(var->cam_dir, var->cam_up));
+}
+
+void	init_raytracing(t_ray *ray)
+{
+	VIEW_PLANE_DIST = 1;
+	VIEW_PLANE_WIDTH = ray->WIDTH_WIN / 10000;
+	VIEW_PLANE_HEIGHT = ray->HEIGHT_WIN / 10000;
+	VIEW_PLANE_UPLEFT = unit_vector(sub_vectors(add_vectors(ray->CAM_POS,
+				add_vectors(time_vector(CAM_DIR, VIEW_PLANE_DIST),
+					time_vector(CAM_UP, VIEW_PLANE_HEIGHT / 2.0))),
+			time_vector(CAM_RIGHT, VIEW_PLANE_WIDTH / 2.0)));
+	X_INDENT = VIEW_PLANE_WIDTH / (double)ray->var->width_win;
+	Y_INDENT = VIEW_PLANE_HEIGHT / (double)ray->var->height_win;
 }
 
 void	rtv1(fd)
@@ -49,8 +66,8 @@ void	rtv1(fd)
 
 	if (!(var = (t_var *)ft_memalloc(sizeof(t_var))))
 		exit(EXIT_FAILURE);
-	init_environnement(var);
 	parse_doc(fd, var);
+	init_variables(var);
 	mlx_loop_hook(MLX, launch_rtv1, var);
 	mlx_hook(WIN, KeyPress, KeyPressMask, ft_key, var);
 	mlx_hook(WIN, KeyRelease, KeyReleaseMask, ft_release, var);
