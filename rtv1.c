@@ -6,33 +6,39 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:06:17 by atoulous          #+#    #+#             */
-/*   Updated: 2016/11/21 18:32:15 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/11/30 14:54:44 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void	fill_image(t_var *var, int x, int y, int color)
+void	fill_image(t_ray *ray, int color, double angle)
 {
 	unsigned int	r;
 	unsigned int	g;
 	unsigned int	b;
 
-	r = color >> 0;
-	g = color >> 8;
-	b = color >> 16;
-	if (x >= 0 && x < WIDTH_WIN && y >= 0 && y < HEIGHT_WIN)
+	r = (color & 0xFF) * angle;
+	g = ((color & 0xFF00) >> 8) * angle;
+	b = ((color & 0xFF0000) >> 16) * angle;
+	if (angle >= 0.990000 && angle < 1)
 	{
-		DATA[y * SIZELINE + x * (BPP / 8)] = r;
-		DATA[y * SIZELINE + x * (BPP / 8) + 1] = g;
-		DATA[y * SIZELINE + x * (BPP / 8) + 2] = b;
+		r += (255 - r) * (angle - 0.99) / 0.01;
+		g += (255 - g) * (angle - 0.99) / 0.01;
+		b += (255 - b) * (angle - 0.99) / 0.01;
+	}
+	if (X >= 0 && X < ray->WIDTH_WIN && Y >= 0 && Y < ray->HEIGHT_WIN)
+	{
+		ray->DATA[Y * ray->SIZELINE + X * (ray->BPP / 8)] = r;
+		ray->DATA[Y * ray->SIZELINE + X * (ray->BPP / 8) + 1] = g;
+		ray->DATA[Y * ray->SIZELINE + X * (ray->BPP / 8) + 2] = b;
 	}
 }
 
 void	init_variables(t_var *var)
 {
 	MLX = mlx_init();
-	WIN = mlx_new_window(MLX, WIDTH_WIN, HEIGHT_WIN, "RTV1");
+	WIN = mlx_new_window(MLX, WIDTH_WIN, HEIGHT_WIN, SCENE_NAME);
 	IMG = mlx_new_image(MLX, WIDTH_WIN, HEIGHT_WIN);
 	DATA = mlx_get_data_addr(IMG, &BPP, &SIZELINE, &ENDIAN);
 	TH = -1;
@@ -41,23 +47,30 @@ void	init_variables(t_var *var)
 		if (!(var->ray[TH] = (t_ray *)ft_memalloc(sizeof(t_ray))))
 			exit(EXIT_FAILURE);
 		var->ray[TH]->var = var;
+		var->ray[TH]->th = TH;
+		var->ray[TH]->lol = 0;
 	}
-	var->cam_dir = unit_vector(fill_vector(-CAM_POS.x, -CAM_POS.y, -CAM_POS.z));
-	var->cam_up = fill_vector(0, 1, 0);
-	var->cam_right = unit_vector(perp_vectors(var->cam_dir, var->cam_up));
 }
 
 void	init_raytracing(t_ray *ray)
 {
-	VIEW_PLANE_DIST = 1;
-	VIEW_PLANE_WIDTH = ray->WIDTH_WIN / 10000;
-	VIEW_PLANE_HEIGHT = ray->HEIGHT_WIN / 10000;
-	VIEW_PLANE_UPLEFT = unit_vector(sub_vectors(add_vectors(ray->CAM_POS,
+	CAM_DIR = unit_vector(fill_vector(-ray->CAM_POS.x, -ray->CAM_POS.y,
+				-ray->CAM_POS.z));
+	if (!ray->lol)
+		CAM_UP = fill_vector(0, 1, 0);
+	else
+		CAM_UP = unit_vector(perp_vectors(CAM_DIR, CAM_RIGHT));
+	CAM_RIGHT = unit_vector(perp_vectors(CAM_DIR, CAM_UP));
+	VIEW_PLANE_DIST = ray->CAM_POS.z / 100;
+	VIEW_PLANE_WIDTH = ray->WIDTH_WIN / 1000;
+	VIEW_PLANE_HEIGHT = ray->HEIGHT_WIN / 1000;
+	VIEW_PLANE_UPLEFT = add_vectors(ray->CAM_POS, sub_vectors(
 				add_vectors(time_vector(CAM_DIR, VIEW_PLANE_DIST),
-					time_vector(CAM_UP, VIEW_PLANE_HEIGHT / 2.0))),
+					time_vector(CAM_UP, VIEW_PLANE_HEIGHT / 2.0)),
 			time_vector(CAM_RIGHT, VIEW_PLANE_WIDTH / 2.0)));
 	X_INDENT = VIEW_PLANE_WIDTH / (double)ray->var->width_win;
 	Y_INDENT = VIEW_PLANE_HEIGHT / (double)ray->var->height_win;
+	ray->lol = 1;
 }
 
 void	rtv1(fd)

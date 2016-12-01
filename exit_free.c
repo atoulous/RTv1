@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 15:00:18 by atoulous          #+#    #+#             */
-/*   Updated: 2016/11/17 17:32:50 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/11/22 18:18:31 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	free_obj(t_var *var)
 	free(OBJ_STR);
 	free(OBJ_NAME);
 	free(OBJ_TYPE);
-	free(OBJ_INTER);
 	free(OBJ_STR_COLOR);
 	free(OBJ_RGB);
 	free(var->object[OBJ]);

@@ -6,32 +6,17 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 14:50:37 by atoulous          #+#    #+#             */
-/*   Updated: 2016/11/21 18:50:22 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/11/30 19:24:28 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-/*int		restart_rt(t_var *var)
+int		restart_rt(t_var *var)
 {
-	char	*doc;
-	t_var	*var2;
-
-	doc = ft_strdup(DOC);
-	free_all(var);
-	if (!(var2 = (t_var *)ft_memalloc(sizeof(t_var))))
-		exit(EXIT_FAILURE);
-	var = var2;
-	DOC = doc;
-	NB_OBJ = ft_nbstrstr(DOC, "object ");
-	if (!(var->object = (t_obj **)ft_memalloc(sizeof(t_obj *) * NB_OBJ)))
-		exit(EXIT_FAILURE);
-	I = 0;
-	check_scene_param(var, NULL, NULL);
-	check_object_param(var);
-	init_variables(var);
+	(void)var;
 	return (0);
-}*/
+}
 
 int		ft_reset_screen(t_var *var)
 {
@@ -43,20 +28,26 @@ int		ft_reset_screen(t_var *var)
 	{
 		x = -1;
 		while (++x < WIDTH_WIN)
-			fill_image(var, x, y, 0);
+		{
+			var->ray[0]->x = x;
+			var->ray[0]->y = y;
+			fill_image(var->ray[0], 0, 1);
+		}
 	}
 	return (0);
 }
 
 int		ft_key(int keycode, t_var *var)
 {
-	ft_reset_screen(var);
+	//ft_reset_screen(var);
 	keycode == 53 ? ft_crossquit(var) : 0;
-	//keycode == 51 ? restart_rt(var) : 0;
+	keycode == 51 ? restart_rt(var) : 0;
 	keycode == 123 ? CAM_POS.x += 10 : 0;
 	keycode == 124 ? CAM_POS.x -= 10 : 0;
 	keycode == 125 ? CAM_POS.y += 10 : 0;
 	keycode == 126 ? CAM_POS.y -= 10 : 0;
+	keycode == 27 ? CAM_POS.z -= 10 : 0;
+	keycode == 24 ? CAM_POS.z += 10 : 0;
 	return (0);
 }
 

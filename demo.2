@@ -3,10 +3,9 @@
 #
 
 scene {
-	name { demo_2 }
-
-	camero {
-		origin { 200.0 0.0 50.0 }
+	name { demo_1 }
+	camera {
+		origin { 0 0 -100 }
 	}
 	render {
 		mlx_all_objects { 1080 800 }
@@ -14,13 +13,22 @@ scene {
 
 # les objets
 
-	objets {
-		name { plan }
-		inter {
-			plane { 100.0 } }
+	object {
+		name { sphere1 }
+		type { sphere }
+		size { 10.0 }
+		origin { 0 0 0 }
 		color {
-			rgb { 0x0000 0x0000 0xFF00 } }
+			rgb { 0xFF0000 }
+		}
 	}
-}
-
+	object {
+		name { plane1 }
+		type { plane }
+		origin { 0 0 100 }
+		normale { 0 0 1 }
+		color {
+			rgb { 0xFFFF00 }
+		}
+	}
 # end
