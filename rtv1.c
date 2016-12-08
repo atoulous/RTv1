@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:06:17 by atoulous          #+#    #+#             */
-/*   Updated: 2016/11/30 14:54:44 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/08 19:48:46 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,27 @@ void	fill_image(t_ray *ray, int color, double angle)
 	unsigned int	g;
 	unsigned int	b;
 
-	r = (color & 0xFF) * angle;
-	g = ((color & 0xFF00) >> 8) * angle;
-	b = ((color & 0xFF0000) >> 16) * angle;
+	if (angle >= 0.15 && angle < 1)
+	{
+		r = (color & 0xFF) * angle;
+		g = ((color & 0xFF00) >> 8) * angle;
+		b = ((color & 0xFF0000) >> 16) * angle;
+	}
+	else
+	{
+		r = (color & 0xFF) * 0.15;
+		g = ((color & 0xFF00) >> 8) * 0.15;
+		b = ((color & 0xFF0000) >> 16) * 0.15;
+	}
 	if (angle >= 0.990000 && angle < 1)
 	{
 		r += (255 - r) * (angle - 0.99) / 0.01;
 		g += (255 - g) * (angle - 0.99) / 0.01;
 		b += (255 - b) * (angle - 0.99) / 0.01;
 	}
-	if (X >= 0 && X < ray->WIDTH_WIN && Y >= 0 && Y < ray->HEIGHT_WIN)
-	{
-		ray->DATA[Y * ray->SIZELINE + X * (ray->BPP / 8)] = r;
-		ray->DATA[Y * ray->SIZELINE + X * (ray->BPP / 8) + 1] = g;
-		ray->DATA[Y * ray->SIZELINE + X * (ray->BPP / 8) + 2] = b;
-	}
+	ray->DATA[Y * ray->SIZELINE + X * (ray->BPP / 8)] = r;
+	ray->DATA[Y * ray->SIZELINE + X * (ray->BPP / 8) + 1] = g;
+	ray->DATA[Y * ray->SIZELINE + X * (ray->BPP / 8) + 2] = b;
 }
 
 void	init_variables(t_var *var)
@@ -83,9 +89,6 @@ void	rtv1(fd)
 	init_variables(var);
 	mlx_loop_hook(MLX, launch_rtv1, var);
 	mlx_hook(WIN, KeyPress, KeyPressMask, ft_key, var);
-	mlx_hook(WIN, KeyRelease, KeyReleaseMask, ft_release, var);
-	mlx_hook(WIN, ButtonPress, ButtonPressMask, ft_mouse, var);
-	mlx_hook(WIN, MotionNotify, ButtonMotionMask, ft_motion_mouse, var);
 	mlx_hook(WIN, DestroyNotify, Button1MotionMask, ft_crossquit, var);
 	mlx_loop(MLX);
 }

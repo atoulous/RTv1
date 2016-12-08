@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 16:56:41 by atoulous          #+#    #+#             */
-/*   Updated: 2016/11/30 13:46:42 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/08 16:02:12 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,104 +87,6 @@ void	check_spot_param(t_var *var)
 	}
 }
 
-void	check_object_size(t_var *var)
-{
-	char	*size;
-	char	**tab;
-
-	if (!(size = parse_str(OBJ_STR, "size ", 0, var)))
-		ft_exit("pas d'object size");
-	else
-	{
-		if (!ft_strcmp(OBJ_TYPE, "sphere"))
-			OBJ_SIZE = ft_atof(size);
-		else if (!ft_strcmp(OBJ_TYPE, "plane"))
-		{
-			if (!(tab = ft_strsplit(size, ' ')) || !tab[0] || !tab[1])
-				ft_exit("pas de plane width or height");
-			else
-			{
-				OBJ_SIZE_WIDTH = ft_atof(tab[0]);
-				OBJ_SIZE_HEIGHT = ft_atof(tab[1]);
-				ft_free2tab(tab);
-			}
-		}
-		free(size);
-	}
-}
-void	check_object_origin(t_var *var)
-{
-	char	*tmp;
-	char	**tab;
-
-	if (!ft_strcmp(OBJ_TYPE, "sphere"))
-		check_object_size(var);
-	if (!(tmp = parse_str(OBJ_STR, "origin ", 0, var)))
-		OBJ_ORIGIN = fill_vector(0, 0, 0);
-	else
-	{
-		tab = ft_strsplit(tmp, ' ');
-		if (!tab[0] || !tab[1] || !tab[2])
-			ft_exit("problem object origin");
-		OBJ_ORIGIN = fill_vector(ft_atof(tab[0]), ft_atof(tab[1]),
-				ft_atof(tab[2]));
-		ft_free2tab(tab);
-		free(tmp);
-	}
-}
-
-void	check_object_normale(t_var *var)
-{
-	char	*tmp;
-	char	**tab;
-
-	if (!(tmp = parse_str(OBJ_STR, "normale ", 0, var)))
-		ft_exit("pas de normale");
-	else
-	{
-		tab = ft_strsplit(tmp, ' ');
-		if (!tab[0] || !tab[1] || !tab[2])
-			ft_exit("problem object normale");
-		OBJ_NORMALE = fill_vector(ft_atof(tab[0]), ft_atof(tab[1]),
-				ft_atof(tab[2]));
-		ft_free2tab(tab);
-		free(tmp);
-	}
-}
-
-void	check_object_param(t_var *var)
-{
-	char	*color;
-
-	OBJ = -1;
-	while (++OBJ < NB_OBJ)
-	{
-		if (!(var->object[OBJ] = (t_obj *)ft_memalloc(sizeof(t_obj))))
-			exit(EXIT_FAILURE);
-		OBJ_STR = parse_str(DOC + COUNT, "object ", 1, var);
-		if (!(OBJ_NAME = parse_str(OBJ_STR, "name ", 0, var)))
-			ft_exit("pas d'object name");
-		if (!(OBJ_TYPE = parse_str(OBJ_STR, "type ", 0, var)))
-			ft_exit("pas d'object type");
-		check_object_origin(var);
-		if (!ft_strcmp(OBJ_TYPE, "plane"))
-			check_object_normale(var);
-		if (!(OBJ_STR_COLOR = parse_str(OBJ_STR, "color ", 0, var)))
-			ft_exit("pas d'object color");
-		else
-		{
-			if ((OBJ_RGB = parse_str(OBJ_STR_COLOR, "rgb ", 0, var)))
-			{
-				color = ft_convert_base(OBJ_RGB, BASE16, BASE10);
-				OBJ_COLOR = ft_atoi(color);
-				free(color);
-			}
-			else
-				OBJ_COLOR = 0xFF0000;
-		}
-	}
-}
-
 void	check_scene_param(t_var *var, char **tb, char *size)
 {
 	if (!(SCENE_NAME = parse_str(DOC, "name ", 1, var)))
@@ -194,18 +96,19 @@ void	check_scene_param(t_var *var, char **tb, char *size)
 	else
 	{
 		if (!(ORIGIN = parse_str(CAMERA, "origin ", 0, var)))
-			CAM_POS = fill_vector(-1.0, -1.0, -1.0);
+			CAM_POS = fill_vector(0, 0, -100);
 		else
 		{
 			tb = ft_strsplit(ORIGIN, ' ');
-			CAM_POS = fill_vector(ft_atof(tb[0]), ft_atof(tb[1]), ft_atof(tb[2]));
+			CAM_POS = fill_vector(ft_atof(tb[0]), ft_atof(tb[1]),
+					ft_atof(tb[2]));
 			ft_free2tab(tb);
 		}
 	}
 	if (!(RENDER = parse_str(DOC, "render ", 1, var)))
 		ft_exit("pas de param render");
 	if (!(size = parse_str(RENDER, "mlx_all_objects ", 0, var)))
-		size = ft_strdup("9080 800");
+		size = ft_strdup("1080 800");
 	tb = ft_strsplit(size, ' ');
 	WIDTH_WIN = ft_atof(tb[0]);
 	HEIGHT_WIN = ft_atof(tb[1]);
@@ -232,7 +135,9 @@ void	parse_doc(int fd, t_var *var)
 	if (!(var->spot = (t_spot **)ft_memalloc(sizeof(t_spot *) * NB_SPOT)))
 		exit(EXIT_FAILURE);
 	check_scene_param(var, NULL, NULL);
-	check_object_param(var);
+	OBJ = -1;
+	while (++OBJ < NB_OBJ)
+		check_object_param(var);
 	check_spot_param(var);
 	ft_putstr(DOC);
 }

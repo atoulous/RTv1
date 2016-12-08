@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 11:49:20 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/28 11:53:56 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/07 14:32:10 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 char	*ft_strdupfree(char *s1, char *s2)
 {
-	free((char*)s1);
+	s1 ? free((char*)s1) : 0;
 	return (ft_strdup(s2));
 }

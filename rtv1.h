@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:07:08 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/01 18:23:36 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/08 19:49:15 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@
 # define T ray->t
 # define T_MIN ray->t_min
 # define T_MAX ray->t_max
+# define T_OBJ ray->t_obj
 # define ANGLE ray->angle
 # define ANGLE_MIN ray->angle_min
+# define SHADOW ray->shadow
 # define X ray->x
 # define Y ray->y
 
@@ -78,15 +80,16 @@
 #define OBJ_STR_COLOR var->object[OBJ]->str_color
 #define OBJ_COLOR var->object[OBJ]->obj_color
 #define OBJ_SIZE var->object[OBJ]->obj_size
-#define OBJ_SIZE_WIDTH var->object[OBJ]->size_width
-#define OBJ_SIZE_HEIGHT var->object[OBJ]->size_height
 #define OBJ_RGB var->object[OBJ]->obj_rgb
 #define OBJ_ORIGIN var->object[OBJ]->obj_origin
+#define OBJ_ORIGIN2 var->object[OBJ]->obj_origin2
 #define OBJ_NORMALE var->object[OBJ]->obj_normale
 #define ROBJ_TYPE ray->var->object[i]->type
 #define ROBJ_ORIGIN ray->var->object[i]->obj_origin
+#define ROBJ_ORIGIN2 ray->var->object[i]->obj_origin2
 #define ROBJ_NORMALE ray->var->object[i]->obj_normale
 #define ROBJ_COLOR ray->var->object[i]->obj_color
+#define ROBJ_SIZE ray->var->object[i]->obj_size
 
 /*
 ** global environnement defines
@@ -141,6 +144,8 @@ typedef struct		s_ray
 	double			t_max;
 	double			angle;
 	double			angle_min;
+	double			shadow;
+	int				t_obj;
 	int				hit;
 	int				th;
 	int				lol;
@@ -162,7 +167,6 @@ typedef struct		s_spot
 	char			*str;
 	char			*name;
 	char			*type;
-	char			*inter;
 	char			*str_color;
 	char			*rgb_color;
 	unsigned int	spot_color;
@@ -187,9 +191,8 @@ typedef struct		s_obj
 	char			*obj_rgb;
 	unsigned int	obj_color;
 	double			obj_size;
-	double			size_width;
-	double			size_height;
 	t_vector		obj_origin;
+	t_vector		obj_origin2;
 	t_vector		obj_normale;
 }					t_obj;
 
@@ -236,13 +239,19 @@ void				init_variables(t_var *var);
 void				init_raytracing(t_ray *ray);
 void				check_scene_param(t_var *var, char **tb, char *size);
 void				check_object_param(t_var *var);
+char				*parse_str(char *doc, char *str, int mode, t_var *var);
 int					launch_rtv1(t_var *var);
 int					ft_key(int keycode, t_var *var);
-int					ft_release(int keycode, t_var *var);
-int					ft_mouse(int button, int x, int y, t_var *var);
-int					ft_motion_mouse(int x, int y, t_var *var);
 int					ft_crossquit(t_var *var);
-
+double				calc_sphere(t_ray *ray, t_vector ray_dir,
+					t_vector ray_source, int i);
+double				calc_plane(t_ray *ray, t_vector ray_dir,
+					t_vector ray_source, int i);
+double				calc_cylinder(t_ray *ray, t_vector ray_dir,
+					t_vector ray_source, int i);
+double				calc_cone(t_ray *ray, t_vector ray_dir,
+					t_vector ray_source, int i);
+double				calc_shadows(t_ray *ray, t_vector ray_dir, int j);
 void				print_vector(t_vector v, char *str);
 double				norm_vector(t_vector v);
 t_vector			unit_vector(t_vector v);
