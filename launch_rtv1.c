@@ -6,24 +6,61 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 15:43:30 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/08 19:49:19 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:24:51 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-double		calc_angle(t_ray *ray, t_vector ray_dir, int i, int j)
+double	calc_shadows(t_ray *ray, t_vector ray_dir, int j)
+{
+	t_vector	ray_spot;
+	t_vector	pos_spot;
+	double		t;
+	int			i;
+
+	pos_spot = add_vectors(ray->CAM_POS, time_vector(ray_dir, T_MIN));
+	ray_spot = unit_vector(sub_vectors(RSPOT_ORIGIN, pos_spot));
+	i = -1;
+	while (++i < ray->var->nb_obj)
+	{
+		t = 0;
+		if (!ft_strcmp(ROBJ_TYPE, "sphere") && i != T_OBJ)
+			t = calc_sphere(ray, ray_spot, pos_spot, i);
+		else if (!ft_strcmp(ROBJ_TYPE, "cylinder") && i != T_OBJ)
+			t = calc_cylinder(ray, ray_spot, pos_spot, i);
+		else if (!ft_strcmp(ROBJ_TYPE, "cone") && i != T_OBJ)
+			t = calc_cone(ray, ray_spot, pos_spot, i);
+		if (t > 0.000000)
+			return (t);
+	}
+	return (0);
+}
+
+double	calc_angle(t_ray *ray, t_vector ray_dir, int i, int j)
 {
 	t_vector	normale_obj;
 	t_vector	ray_spot;
 	t_vector	pos_inter;
 	double		angle;
+	double		l;
 
 	pos_inter = add_vectors(ray->CAM_POS, time_vector(ray_dir, T_MIN));
 	ray_spot = unit_vector(sub_vectors(pos_inter, RSPOT_ORIGIN));
-	normale_obj = unit_vector(sub_vectors(ROBJ_ORIGIN, pos_inter));
+	if (!ft_strcmp(ROBJ_TYPE, "sphere"))
+		normale_obj = unit_vector(sub_vectors(ROBJ_ORIGIN, pos_inter));
+	else
+	{
+		l = norm_vector(sub_vectors(ROBJ_ORIGIN, pos_inter));
+		l = sqrt(l * l - ROBJ_SIZE * ROBJ_SIZE);
+		normale_obj = unit_vector(sub_vectors(ROBJ_ORIGIN2, ROBJ_ORIGIN));
+		if (angle_vectors(sub_vectors(ROBJ_ORIGIN, pos_inter), normale_obj) > 0)
+			normale_obj = unit_vector(sub_vectors(ROBJ_ORIGIN, ROBJ_ORIGIN2));
+		normale_obj = add_vectors(ROBJ_ORIGIN, time_vector(normale_obj, l));
+		normale_obj = unit_vector(sub_vectors(normale_obj, pos_inter));
+	}
 	angle = angle_vectors(ray_spot, normale_obj);
-	return (angle);
+	return (angle < 0 ? -angle : angle);
 }
 
 void	multi_spot(t_ray *ray, t_vector ray_dir, int i)
@@ -43,6 +80,8 @@ void	multi_spot(t_ray *ray, t_vector ray_dir, int i)
 	}
 	ray->var->nb_spot == 0 ? ANGLE_MIN = 1 : 0;
 	ANGLE_MIN -= SHADOW;
+	((ANGLE_MIN + LUMINOSITE) < 1) && ((ANGLE_MIN - LUMINOSITE) > 0.0) ?
+		ANGLE_MIN += LUMINOSITE : 0;
 	if (ANGLE_MIN > 0.000000)
 		fill_image(ray, ROBJ_COLOR, ANGLE_MIN);
 	else
@@ -51,16 +90,15 @@ void	multi_spot(t_ray *ray, t_vector ray_dir, int i)
 
 void	raytracing(t_ray *ray)
 {
-	t_vector	pos_pix;
 	int			i;
 
-	pos_pix = add_vectors(VIEW_PLANE_UPLEFT, sub_vectors(
-				time_vector(CAM_RIGHT, X_INDENT * X),
-				time_vector(CAM_UP, Y_INDENT * Y)));
-	RAY_DIR = unit_vector(sub_vectors(ray->CAM_POS, pos_pix));
+	RAY_DIR = unit_vector(sub_vectors(ray->CAM_POS, add_vectors(
+		VIEW_PLANE_UPLEFT, sub_vectors(time_vector(CAM_RIGHT, X_INDENT * X),
+		time_vector(CAM_UP, Y_INDENT * Y)))));
 	i = -1;
 	while (++i < ray->var->nb_obj)
 	{
+		ray->i = i;
 		if (!ft_strcmp(ROBJ_TYPE, "sphere"))
 			T = calc_sphere(ray, RAY_DIR, ray->CAM_POS, i);
 		else if (!ft_strcmp(ROBJ_TYPE, "plane"))
@@ -76,16 +114,13 @@ void	raytracing(t_ray *ray)
 			T_MIN = T;
 		}
 	}
-	if (T_MIN != 1000000)
-		multi_spot(ray, RAY_DIR, T_OBJ);
+	multi_spot(ray, RAY_DIR, T_OBJ);
 }
 
-void	*multi_thread(void *arg)
+void	*perform_rtv1(void *arg)
 {
 	t_ray		*ray;
 	t_var		*var;
-	int			x;
-	int			y;
 
 	ray = (t_ray *)arg;
 	var = ray->var;
@@ -104,20 +139,4 @@ void	*multi_thread(void *arg)
 		}
 	}
 	pthread_exit(0);
-}
-
-int		launch_rtv1(t_var *var)
-{
-	pthread_t	th[NB_TH];
-	int			i;
-
-	TH = -1;
-	while (++TH < NB_TH)
-		if (pthread_create(&th[TH], NULL, &multi_thread, var->ray[TH]))
-			exit(EXIT_FAILURE);
-	TH = -1;
-	while (++TH < NB_TH)
-		pthread_join(th[TH], NULL);
-	mlx_put_image_to_window(MLX, WIN, IMG, 0, 0);
-	return (0);
 }

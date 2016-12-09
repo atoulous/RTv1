@@ -6,7 +6,7 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:24:07 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/08 16:26:31 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:13:30 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	check_object_size(t_var *var)
 {
 	char	*size;
-	char	**tab;
 
 	if (!(size = parse_str(OBJ_STR, "size ", 0, var)))
 		ft_exit("pas d'object size");
@@ -66,42 +65,22 @@ void	check_object_normale(t_var *var)
 	}
 }
 
-void	check_cylinder_origin(t_var *var)
+void	check_object_color(t_var *var)
 {
-	char	*tmp;
-	char	**tab;
+	char	*color;
 
-	check_object_size(var);
-	if (!(tmp = parse_str(OBJ_STR, "origin1 ", 0, var)))
-		ft_exit("pas de cylindre origin1");
-	else
+	if ((OBJ_RGB = parse_str(OBJ_STR_COLOR, "rgb ", 0, var)))
 	{
-		tab = ft_strsplit(tmp, ' ');
-		if (!tab[0] || !tab[1] || !tab[2])
-			ft_exit("problem cylinder origin1");
-		OBJ_ORIGIN = fill_vector(ft_atof(tab[0]), ft_atof(tab[1]),
-				ft_atof(tab[2]));
-		ft_free2tab(tab);
-		free(tmp);
+		color = ft_convert_base(OBJ_RGB, BASE16, BASE10);
+		OBJ_COLOR = ft_atoi(color);
+		free(color);
 	}
-	if (!(tmp = parse_str(OBJ_STR, "origin2 ", 0, var)))
-		ft_exit("pas de cylindre origin2");
 	else
-	{
-		tab = ft_strsplit(tmp, ' ');
-		if (!tab[0] || !tab[1] || !tab[2])
-			ft_exit("problem cylinder origin2");
-		OBJ_ORIGIN2 = fill_vector(ft_atof(tab[0]), ft_atof(tab[1]),
-				ft_atof(tab[2]));
-		ft_free2tab(tab);
-		free(tmp);
-	}
+		OBJ_COLOR = 0xFF0000;
 }
 
 void	check_object_param(t_var *var)
 {
-	char	*color;
-
 	if (!(var->object[OBJ] = (t_obj *)ft_memalloc(sizeof(t_obj))))
 		exit(EXIT_FAILURE);
 	OBJ_STR = parse_str(DOC + COUNT, "object ", 1, var);
@@ -112,20 +91,14 @@ void	check_object_param(t_var *var)
 	if (ft_strcmp(OBJ_TYPE, "cylinder") && ft_strcmp(OBJ_TYPE, "cone"))
 		check_object_origin(var);
 	else
-		check_cylinder_origin(var);
+	{
+		check_object_size(var);
+		check_cylinder_cone_origins(var);
+	}
 	if (!ft_strcmp(OBJ_TYPE, "plane"))
 		check_object_normale(var);
 	if (!(OBJ_STR_COLOR = parse_str(OBJ_STR, "color ", 0, var)))
 		ft_exit("pas d'object color");
 	else
-	{
-		if ((OBJ_RGB = parse_str(OBJ_STR_COLOR, "rgb ", 0, var)))
-		{
-			color = ft_convert_base(OBJ_RGB, BASE16, BASE10);
-			OBJ_COLOR = ft_atoi(color);
-			free(color);
-		}
-		else
-			OBJ_COLOR = 0xFF0000;
-	}
+		check_object_color(var);
 }

@@ -6,7 +6,7 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:15:39 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/08 19:49:17 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:00:54 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ double	calc_cylinder(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
 	t_vector	p;
 	t_vector	tmp;
 	double		t1;
-	double		t2;
 
 	normale_obj = unit_vector(sub_vectors(ROBJ_ORIGIN2, ROBJ_ORIGIN));
 	p = sub_vectors(ray_source, ROBJ_ORIGIN);
@@ -81,26 +80,20 @@ double	calc_cylinder(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
 	if (DET > 0.0)
 	{
 		t1 = (-B + sqrt(DET)) / (2.0 * A);
-		t2 = (-B - sqrt(DET)) / (2.0 * A);
-		t1 > t2 ? t1 = t2 : 0;
+		if (((-B - sqrt(DET)) / (2.0 * A)) < t1)
+			t1 = (-B - sqrt(DET)) / (2.0 * A);
 	}
-	else if (DET == 0.0)
-		t1 = -B / (2.0 * A);
 	return (t1);
 }
 
-double	calc_cone(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
+double	calc_cone_det(t_ray *ray, t_vector ray_dir, t_vector p, double alpha)
 {
 	t_vector	normale_obj;
-	t_vector	p;
 	t_vector	tmp;
-	double		alpha;
-	double		t1;
-	double		t2;
+	int			i;
 
-	alpha = ROBJ_SIZE * (M_PI / 180);
+	i = ray->i;
 	normale_obj = unit_vector(sub_vectors(ROBJ_ORIGIN2, ROBJ_ORIGIN));
-	p = sub_vectors(ray_source, ROBJ_ORIGIN);
 	tmp = sub_vectors(ray_dir, time_vector(normale_obj,
 				angle_vectors(ray_dir, normale_obj)));
 	A = cos(alpha) * angle_vectors(tmp, tmp) - sin(alpha) *
@@ -115,7 +108,19 @@ double	calc_cone(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
 		angle_vectors(p, normale_obj)));
 	C = cos(alpha) * angle_vectors(tmp, tmp) - sin(alpha)
 		* (angle_vectors(p, normale_obj) * angle_vectors(p, normale_obj));
-	DET = B * B - 4.0 * A * C;
+	return (B * B - 4.0 * A * C);
+}
+
+double	calc_cone(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
+{
+	t_vector	p;
+	double		alpha;
+	double		t1;
+	double		t2;
+
+	alpha = ROBJ_SIZE * (M_PI / 180);
+	p = sub_vectors(ray_source, ROBJ_ORIGIN);
+	DET = calc_cone_det(ray, ray_dir, p, alpha);
 	t1 = 0;
 	if (DET > 0.0)
 	{
@@ -126,31 +131,4 @@ double	calc_cone(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
 	else if (DET == 0.0)
 		t1 = -B / (2.0 * A);
 	return (t1);
-}
-
-double	calc_shadows(t_ray *ray, t_vector ray_dir, int j)
-{
-	t_vector	ray_spot;
-	t_vector	pos_spot;
-	double		t;
-	int			i;
-
-	pos_spot = add_vectors(ray->CAM_POS, time_vector(ray_dir, T_MIN));
-	ray_spot = unit_vector(sub_vectors(RSPOT_ORIGIN, pos_spot));
-	i = -1;
-	while (++i < ray->var->nb_obj)
-	{
-		t = 0;
-		if (!ft_strcmp(ROBJ_TYPE, "sphere") && i != T_OBJ)
-			t = calc_sphere(ray, ray_spot, pos_spot, i);
-		else if (!ft_strcmp(ROBJ_TYPE, "cylinder") && i != T_OBJ)
-			t = calc_cylinder(ray, ray_spot, pos_spot, i);
-		else if (!ft_strcmp(ROBJ_TYPE, "cone") && i != T_OBJ)
-			t = calc_cone(ray, ray_spot, pos_spot, i);
-		//else if (!ft_strcmp(ROBJ_TYPE, "plane") && i != T_OBJ)
-		//	t = calc_plane(ray, ray_spot, pos_spot, i);
-		if (t > 0.000000)
-			return (t);
-	}
-	return (0);
 }

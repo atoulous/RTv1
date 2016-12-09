@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:07:08 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/08 19:49:15 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:15:36 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,22 @@
 ** object param
 */
 
-#define OBJ_STR var->object[OBJ]->str
-#define OBJ_NAME var->object[OBJ]->name
-#define OBJ_TYPE var->object[OBJ]->type
-#define OBJ_STR_COLOR var->object[OBJ]->str_color
-#define OBJ_COLOR var->object[OBJ]->obj_color
-#define OBJ_SIZE var->object[OBJ]->obj_size
-#define OBJ_RGB var->object[OBJ]->obj_rgb
-#define OBJ_ORIGIN var->object[OBJ]->obj_origin
-#define OBJ_ORIGIN2 var->object[OBJ]->obj_origin2
-#define OBJ_NORMALE var->object[OBJ]->obj_normale
-#define ROBJ_TYPE ray->var->object[i]->type
-#define ROBJ_ORIGIN ray->var->object[i]->obj_origin
-#define ROBJ_ORIGIN2 ray->var->object[i]->obj_origin2
-#define ROBJ_NORMALE ray->var->object[i]->obj_normale
-#define ROBJ_COLOR ray->var->object[i]->obj_color
-#define ROBJ_SIZE ray->var->object[i]->obj_size
+# define OBJ_STR var->object[OBJ]->str
+# define OBJ_NAME var->object[OBJ]->name
+# define OBJ_TYPE var->object[OBJ]->type
+# define OBJ_STR_COLOR var->object[OBJ]->str_color
+# define OBJ_COLOR var->object[OBJ]->obj_color
+# define OBJ_SIZE var->object[OBJ]->obj_size
+# define OBJ_RGB var->object[OBJ]->obj_rgb
+# define OBJ_ORIGIN var->object[OBJ]->obj_origin
+# define OBJ_ORIGIN2 var->object[OBJ]->obj_origin2
+# define OBJ_NORMALE var->object[OBJ]->obj_normale
+# define ROBJ_TYPE ray->var->object[i]->type
+# define ROBJ_ORIGIN ray->var->object[i]->obj_origin
+# define ROBJ_ORIGIN2 ray->var->object[i]->obj_origin2
+# define ROBJ_NORMALE ray->var->object[i]->obj_normale
+# define ROBJ_COLOR ray->var->object[i]->obj_color
+# define ROBJ_SIZE ray->var->object[i]->obj_size
 
 /*
 ** global environnement defines
@@ -116,6 +116,7 @@
 # define COUNT var->i
 # define NB_OBJ var->nb_obj
 # define CAM_POS var->cam_pos
+# define LUMINOSITE ray->var->luminosite
 
 /*
 ** raytracing variables
@@ -151,6 +152,7 @@ typedef struct		s_ray
 	int				lol;
 	int				x;
 	int				y;
+	int				i;
 	t_vector		viewplaneupleft;
 	t_vector		ray;
 	t_vector		ray_dir;
@@ -213,6 +215,7 @@ typedef struct		s_var
 	char			*render;
 	double			width_win;
 	double			height_win;
+	double			luminosite;
 	int				bpp;
 	int				sizeline;
 	int				endian;
@@ -239,8 +242,9 @@ void				init_variables(t_var *var);
 void				init_raytracing(t_ray *ray);
 void				check_scene_param(t_var *var, char **tb, char *size);
 void				check_object_param(t_var *var);
+void				*perform_rtv1(void *arg);
+void				check_cylinder_cone_origins(t_var *var);
 char				*parse_str(char *doc, char *str, int mode, t_var *var);
-int					launch_rtv1(t_var *var);
 int					ft_key(int keycode, t_var *var);
 int					ft_crossquit(t_var *var);
 double				calc_sphere(t_ray *ray, t_vector ray_dir,
