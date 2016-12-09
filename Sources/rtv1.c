@@ -6,11 +6,11 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:06:17 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:18:38 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:49:50 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 void	fill_image(t_ray *ray, int color, double angle)
 {
@@ -81,5 +81,7 @@ int		main(int ac, char **av)
 			rtv1(fd);
 		close(fd);
 	}
+	else
+		ft_putendl("Choose scene document");
 	return (0);
 }

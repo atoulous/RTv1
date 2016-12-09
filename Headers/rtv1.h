@@ -6,14 +6,14 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:07:08 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:15:36 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:48:04 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTV1_H
 # define RTV1_H
 
-# include "Libs/libft/libft.h"
+# include "../Libs/libft/libft.h"
 # include "mlx.h"
 # include "X.h"
 # include <math.h>

@@ -6,11 +6,11 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 15:00:18 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/07 19:53:12 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:47:21 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 void	free_spot(t_var *var)
 {

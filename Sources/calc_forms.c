@@ -6,11 +6,11 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:15:39 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:00:54 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:44:34 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 double	calc_sphere(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
 {

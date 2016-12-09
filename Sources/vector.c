@@ -6,11 +6,11 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 18:46:32 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/07 19:39:46 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:47:54 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 void		print_vector(t_vector v, char *str)
 {

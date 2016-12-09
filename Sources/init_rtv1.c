@@ -6,11 +6,11 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 18:39:09 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 18:39:54 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:47:25 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 void	init_variables(t_var *var)
 {

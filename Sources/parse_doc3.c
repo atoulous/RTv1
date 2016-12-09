@@ -6,11 +6,11 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 19:11:08 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:14:07 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:47:43 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 void	check_origin2(t_var *var)
 {

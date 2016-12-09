@@ -6,11 +6,11 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 16:56:41 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/08 16:02:12 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:47:34 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 char	*parse_str(char *doc, char *str, int mode, t_var *var)
 {

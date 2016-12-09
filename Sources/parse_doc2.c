@@ -6,11 +6,11 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:24:07 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:13:30 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:47:39 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 void	check_object_size(t_var *var)
 {

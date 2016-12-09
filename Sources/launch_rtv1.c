@@ -6,11 +6,11 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 15:43:30 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:24:51 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:47:29 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 double	calc_shadows(t_ray *ray, t_vector ray_dir, int j)
 {

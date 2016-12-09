@@ -6,11 +6,11 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 14:50:37 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 16:53:45 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:47:13 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 int		ft_key(int keycode, t_var *var)
 {

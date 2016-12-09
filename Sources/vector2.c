@@ -6,11 +6,11 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:22:27 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:06:48 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/09 19:47:57 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../Headers/rtv1.h"
 
 double		angle_vectors(t_vector v1, t_vector v2)
 {
