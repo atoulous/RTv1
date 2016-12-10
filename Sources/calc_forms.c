@@ -6,7 +6,7 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:15:39 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:44:34 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/10 15:26:30 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,5 @@ double	calc_cone(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
 	}
 	else if (DET == 0.0)
 		t1 = -B / (2.0 * A);
-	return (t1);
+	return (t1 > 0.000000 ? t1 : 0);
 }

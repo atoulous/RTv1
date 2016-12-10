@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:06:17 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:49:50 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/10 18:54:06 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	fill_image(t_ray *ray, int color, double angle)
 	unsigned int	g;
 	unsigned int	b;
 
-	if (angle >= 0.15 && angle < 1)
+	if (angle >= 0.100 && angle < 1)
 	{
 		r = (color & 0xFF) * angle;
 		g = ((color & 0xFF00) >> 8) * angle;
@@ -26,11 +26,11 @@ void	fill_image(t_ray *ray, int color, double angle)
 	}
 	else
 	{
-		r = (color & 0xFF) * 0.15;
-		g = ((color & 0xFF00) >> 8) * 0.15;
-		b = ((color & 0xFF0000) >> 16) * 0.15;
+		r = (color & 0xFF) * 0.100;
+		g = ((color & 0xFF00) >> 8) * 0.100;
+		b = ((color & 0xFF0000) >> 16) * 0.100;
 	}
-	if (angle >= 0.990000 && angle < 1)
+	if (angle >= 0.990000 && angle < 1 && ray->BRILLANCE)
 	{
 		r += (255 - r) * (angle - 0.99) / 0.01;
 		g += (255 - g) * (angle - 0.99) / 0.01;

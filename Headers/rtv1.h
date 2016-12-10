@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:07:08 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:48:04 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/10 19:32:19 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@
 # define DET ray->det
 # define T ray->t
 # define T_MIN ray->t_min
-# define T_MAX ray->t_max
 # define T_OBJ ray->t_obj
 # define ANGLE ray->angle
 # define ANGLE_MIN ray->angle_min
@@ -111,6 +110,8 @@
 # define WIDTH_WIN var->width_win
 # define HEIGHT_WIN var->height_win
 # define COLOR var->color
+# define BRILLANCE var->b
+# define OMBRE var->o
 # define TH var->th
 # define OBJ var->obj
 # define COUNT var->i
@@ -142,14 +143,12 @@ typedef struct		s_ray
 	double			det;
 	double			t;
 	double			t_min;
-	double			t_max;
 	double			angle;
 	double			angle_min;
 	double			shadow;
 	int				t_obj;
 	int				hit;
 	int				th;
-	int				lol;
 	int				x;
 	int				y;
 	int				i;
@@ -226,6 +225,8 @@ typedef struct		s_var
 	int				nb_obj;
 	int				nb_spot;
 	int				i;
+	int				b;
+	int				o;
 	t_vector		cam_pos;
 	t_vector		cam_dir;
 	t_vector		cam_up;
@@ -240,10 +241,10 @@ void				free_all(t_var *var);
 void				parse_doc(int fd, t_var *var);
 void				init_variables(t_var *var);
 void				init_raytracing(t_ray *ray);
-void				check_scene_param(t_var *var, char **tb, char *size);
 void				check_object_param(t_var *var);
 void				*perform_rtv1(void *arg);
 void				check_cylinder_cone_origins(t_var *var);
+void				check_brillance_ombre(t_var *var);
 char				*parse_str(char *doc, char *str, int mode, t_var *var);
 int					ft_key(int keycode, t_var *var);
 int					ft_crossquit(t_var *var);

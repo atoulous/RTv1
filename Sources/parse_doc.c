@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 16:56:41 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:47:34 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/10 19:38:19 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	check_spot_param(t_var *var)
 	}
 }
 
-void	check_scene_param(t_var *var, char **tb, char *size)
+void	check_scene_param(t_var *var, char **tb)
 {
 	if (!(SCENE_NAME = parse_str(DOC, "name ", 1, var)))
 		ft_exit("pas de scene_name");
@@ -106,14 +106,14 @@ void	check_scene_param(t_var *var, char **tb, char *size)
 		}
 	}
 	if (!(RENDER = parse_str(DOC, "render ", 1, var)))
-		ft_exit("pas de param render");
-	if (!(size = parse_str(RENDER, "mlx_all_objects ", 0, var)))
-		size = ft_strdup("1080 800");
-	tb = ft_strsplit(size, ' ');
-	WIDTH_WIN = ft_atof(tb[0]);
-	HEIGHT_WIN = ft_atof(tb[1]);
+		RENDER = ft_strdup("1080 800");
+	tb = ft_strsplit(RENDER, ' ');
+	WIDTH_WIN = ft_atoi(tb[0]);
+	HEIGHT_WIN = ft_atoi(tb[1]);
 	ft_free2tab(tb);
-	free(size);
+	if ((!ft_isnumber(WIDTH_WIN) || WIDTH_WIN == 0)
+		|| (!ft_isnumber(HEIGHT_WIN) || HEIGHT_WIN == 0))
+		ft_exit("problem de render");
 }
 
 void	parse_doc(int fd, t_var *var)
@@ -134,7 +134,8 @@ void	parse_doc(int fd, t_var *var)
 	NB_SPOT = ft_nbstrstr(DOC, "spot ");
 	if (!(var->spot = (t_spot **)ft_memalloc(sizeof(t_spot *) * NB_SPOT)))
 		exit(EXIT_FAILURE);
-	check_scene_param(var, NULL, NULL);
+	check_scene_param(var, NULL);
+	check_brillance_ombre(var);
 	OBJ = -1;
 	while (++OBJ < NB_OBJ)
 		check_object_param(var);

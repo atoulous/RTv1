@@ -1,0 +1,133 @@
+#
+# Scene 1
+#
+
+scene {
+	name { demo_1 }
+	camera {
+		origin { 0 0 -100 }
+	}
+	render { 1080 800 }
+	ombre { 1 }
+	brillance { 1 }
+	object {
+		name { sphere1 }
+		type { sphere }
+		size { 10.0 }
+		origin { 0 0 0 }
+		color {
+			rgb { 0xFF0000 }
+		}
+	}
+	object {
+		name { sphere2 }
+		type { sphere }
+		size { 10 }
+		origin { 20 20 10 }
+		color {
+			rgb { 0x00FF00 }
+		}
+	}
+	object {
+		name { sphere3 }
+		type { sphere }
+		size { 10 }
+		origin { -20 -20 -10 }
+		color {
+			rgb { 0x0000FF }
+		}
+	}
+	object {
+		name { plane de fond }
+		type { plane }
+		origin { 0 0 20 }
+		normale { 0 0 1 }
+		color {
+			rgb { 0xFFFF00 }
+		}
+	}
+	object {
+		name { plane sol }
+		type { plane }
+		origin { 0 30 0 }
+		normale { 0 -1 0 }
+		color {
+			rgb { 0xFFFF00 }
+		}
+	}
+	object {
+		name { plane plafond }
+		type { plane }
+		origin { 0 -30 0 }
+		normale { 0 1 0 }
+		color {
+			rgb { 0xFFFF00 }
+		}
+	}
+	object {
+		name { plane gauche }
+		type { plane }
+		origin { -60 0 0 }
+		normale { -1 0 0 }
+		color {
+			rgb { 0xFFFF00 }
+		}
+	}
+	object {
+		name { plane droit }
+		type { plane }
+		origin { 60 0 0 }
+		normale { 1 0 0 }
+		color {
+			rgb { 0xFFFF00 }
+		}
+	}
+	object {
+		name { cylinder droit }
+		type { cylinder }
+		size { 5 }
+		origin1 { 40 0 0 }
+		origin2 { 40 10 0 }
+		color {
+			rgb { 0x00FFFF }
+		}
+	}
+	object {
+		name { cylinder gauche }
+		type { cylinder }
+		size { 5 }
+		origin1 { -40 0 0 }
+		origin2 { -40 10 0 }
+		color {
+			rgb { 0x00FFFF }
+		}
+	}
+	object {
+		name { cone centre }
+		type { cone }
+		size { 3 }
+		origin1 { 0 0 0 }
+		origin2 { 0 10 0 }
+		color {
+			rgb { 0x00FFFF }
+		}
+	}
+	spot {
+		name { spot1 }
+		size { 10.0 }
+		origin { 100 0 -100 }
+		color {
+			rgb { 0xFFFFFF }
+		}
+	}
+	spot {
+		name { spot2 }
+		size { 10.0 }
+		origin { -100 0 -100 }
+		color {
+			rgb { 0xFFFFFF }
+		}
+	}
+}
+
+# end

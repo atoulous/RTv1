@@ -1,0 +1,40 @@
+#
+# Scene 3
+#
+
+scene {
+	name { demo_3 }
+	camera {
+		origin { 0 0 -100 }
+	}
+	render { 1080 800 }
+	ombre { 1 }
+	brillance { 0 }
+	object {
+		name { cone1 }
+		type { cone }
+		size { 30.0 }
+		origin1 { 0 0 200 }
+		origin2 { 0 10 200 }
+		color {
+			rgb { 0xFFFF00 }
+		}
+	}
+	object {
+		name { plan1 }
+		type { plane }
+		origin { 0 30 0 }
+		normale { 0 1 0 }
+		color {
+			rgb { 0x0000FF }
+		}
+	}
+	spot {
+		name { spot1 }
+		size { 10.0 }
+		origin { 100 0 -100 }
+		color {
+			rgb { 0xFFFFFF }
+		}
+	}
+}

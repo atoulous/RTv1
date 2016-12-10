@@ -6,11 +6,37 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 19:11:08 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:47:43 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/10 19:05:25 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Headers/rtv1.h"
+
+void	check_brillance_ombre(t_var *var)
+{
+	char	*tmp;
+
+	if (!(tmp = parse_str(DOC, "brillance ", 1, var)))
+		BRILLANCE = 1;
+	else
+	{
+		if (ft_atof(tmp) == 1)
+			BRILLANCE = 1;
+		else
+			BRILLANCE = 0;
+		free(tmp);
+	}
+	if (!(tmp = parse_str(DOC, "ombre", 1, var)))
+		OMBRE = 1;
+	else
+	{
+		if (ft_atof(tmp) == 1)
+			OMBRE = 1;
+		else
+			OMBRE = 0;
+		free(tmp);
+	}
+}
 
 void	check_origin2(t_var *var)
 {
