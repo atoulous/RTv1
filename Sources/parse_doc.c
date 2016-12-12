@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 16:56:41 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/10 19:38:19 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 18:16:34 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ void	check_spot_origin(t_var *var)
 	else
 	{
 		tab = ft_strsplit(tmp, ' ');
-		if (!tab[0] || !tab[1] || !tab[2])
+		if ((!tab[0] || !ft_isnumber(ft_atof(tab[0])))
+			|| (!tab[1] || !ft_isnumber(ft_atof(tab[1])))
+			|| (!tab[2] || !ft_isnumber(ft_atof(tab[2]))))
 			ft_exit("problem spot origin");
 		SPOT_ORIGIN = fill_vector(ft_atof(tab[0]), ft_atof(tab[1]),
 				ft_atof(tab[2]));

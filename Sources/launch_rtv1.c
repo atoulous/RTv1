@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 15:43:30 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/12 15:33:13 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 17:52:31 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	multi_spot(t_ray *ray, t_vector ray_dir, int i)
 	((ANGLE_MIN + LUMINOSITE) < 1) && ((ANGLE_MIN - LUMINOSITE) > 0.0) ?
 		ANGLE_MIN += LUMINOSITE : 0;
 	ray->var->nb_spot == 0 ? ANGLE_MIN = 1 : 0;
-	if (ANGLE_MIN)
+	if (ANGLE_MIN > 0.000000)
 		fill_image(ray, ROBJ_COLOR, ANGLE_MIN);
 	else
 		fill_image(ray, ROBJ_COLOR, 0);

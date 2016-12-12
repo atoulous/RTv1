@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:07:08 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/10 19:32:19 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 17:31:21 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,7 @@ typedef struct		s_var
 
 void				fill_image(t_ray *ray, int color, double angle);
 void				free_all(t_var *var);
+void				exit_free(t_var *var, char *str);
 void				parse_doc(int fd, t_var *var);
 void				init_variables(t_var *var);
 void				init_raytracing(t_ray *ray);
@@ -246,6 +247,7 @@ void				*perform_rtv1(void *arg);
 void				check_cylinder_cone_origins(t_var *var);
 void				check_brillance_ombre(t_var *var);
 char				*parse_str(char *doc, char *str, int mode, t_var *var);
+int					launch_rtv1(t_var *var);
 int					ft_key(int keycode, t_var *var);
 int					ft_crossquit(t_var *var);
 double				calc_sphere(t_ray *ray, t_vector ray_dir,

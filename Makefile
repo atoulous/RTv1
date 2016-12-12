@@ -6,7 +6,7 @@
 #    By: atoulous <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/06/17 21:56:41 by atoulous          #+#    #+#              #
-#    Updated: 2016/12/09 19:50:29 by atoulous         ###   ########.fr        #
+#    Updated: 2016/12/12 17:16:36 by atoulous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ $(NAME): $(OBJ)
 	@make -C Libs/libft
 	@make -C Libs/minilibx_macos
 	@$(CF) $(LIBS) -lft -lmlx -framework OpenGL -framework AppKit -o $@ $^
-	@echo "\033[32mwrtv1 well compiled\033[0m"
+	@echo "\033[32mrtv1 well compiled\033[0m"
 	@echo
 
 all: $(NAME)

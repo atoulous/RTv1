@@ -6,7 +6,7 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 18:39:09 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/12 16:39:23 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 17:51:52 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_raytracing(t_ray *ray)
 	CAM_UP = fill_vector(0, -1, 0);
 	CAM_RIGHT = unit_vector(perp_vectors(CAM_UP, CAM_DIR));
 	CAM_UP = unit_vector(perp_vectors(CAM_DIR, CAM_RIGHT));
-	VIEW_PLANE_DIST = ray->CAM_POS.z / 100;
+	VIEW_PLANE_DIST = -1;
 	VIEW_PLANE_WIDTH = ray->WIDTH_WIN / 1000;
 	VIEW_PLANE_HEIGHT = ray->HEIGHT_WIN / 1000;
 	VIEW_PLANE_UPLEFT = add_vectors(ray->CAM_POS, sub_vectors(

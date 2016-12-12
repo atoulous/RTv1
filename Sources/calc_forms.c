@@ -6,7 +6,7 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:15:39 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/12 14:57:40 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 17:56:31 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ double	calc_plane(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
 	z = ray_source.z - ROBJ_ORIGIN.z;
 	d = -angle_vectors(ROBJ_NORMALE, unit_vector(ROBJ_ORIGIN));
 	t = angle_vectors(ray_dir, ROBJ_NORMALE);
-	if (t)
+	if (t > 0.000000)
 	{
 		t = -(((ROBJ_NORMALE.x * x + ROBJ_NORMALE.y * y + ROBJ_NORMALE.z * z)
 		+ d) / t);

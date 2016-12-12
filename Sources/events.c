@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 14:50:37 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/12 15:41:09 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 17:30:46 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ int		ft_key(int keycode, t_var *var)
 		else
 			OMBRE = 1;
 	}
+	launch_rtv1(var);
 	return (0);
 }

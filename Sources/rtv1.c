@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 20:06:17 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/12 15:33:27 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 17:29:54 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	rtv1(int fd)
 		ft_exit("Var Malloc Error");
 	parse_doc(fd, var);
 	init_variables(var);
-	mlx_loop_hook(MLX, launch_rtv1, var);
+	launch_rtv1(var);
 	mlx_hook(WIN, KeyPress, KeyPressMask, ft_key, var);
 	mlx_hook(WIN, DestroyNotify, Button1MotionMask, ft_crossquit, var);
 	mlx_loop(MLX);
@@ -82,6 +82,6 @@ int		main(int ac, char **av)
 		close(fd);
 	}
 	else
-		ft_putendl("Choose scene document");
+		ft_putendl("Choose demo");
 	return (0);
 }
