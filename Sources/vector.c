@@ -6,16 +6,11 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 18:46:32 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/09 19:47:54 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 18:22:05 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Headers/rtv1.h"
-
-void		print_vector(t_vector v, char *str)
-{
-	printf("%s (%lf, %lf, %lf)\n", str, v.x, v.y, v.z);
-}
 
 double		norm_vector(t_vector v)
 {
