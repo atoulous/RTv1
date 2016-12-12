@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 15:43:30 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/10 20:14:49 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 15:33:13 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ double	calc_angle(t_ray *ray, t_vector ray_dir, int i, int j)
 	if (!ft_strcmp(ROBJ_TYPE, "sphere"))
 		normale_obj = unit_vector(sub_vectors(ROBJ_ORIGIN, pos_inter));
 	if (!ft_strcmp(ROBJ_TYPE, "plane"))
-		normale_obj = unit_vector(sub_vectors(pos_inter, ROBJ_NORMALE));
+		normale_obj = ROBJ_NORMALE;
 	if (!ft_strcmp(ROBJ_TYPE, "cylinder") || !ft_strcmp(ROBJ_TYPE, "cone"))
 	{
 		l = norm_vector(sub_vectors(ROBJ_ORIGIN, pos_inter));

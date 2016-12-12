@@ -50,7 +50,7 @@ scene {
 		name { plane sol }
 		type { plane }
 		origin { 0 30 0 }
-		normale { 0 -1 0 }
+		normale { 0 1 0 }
 		color {
 			rgb { 0xFFFF00 }
 		}
@@ -59,7 +59,7 @@ scene {
 		name { plane plafond }
 		type { plane }
 		origin { 0 -30 0 }
-		normale { 0 1 0 }
+		normale { 0 -1 0 }
 		color {
 			rgb { 0xFFFF00 }
 		}

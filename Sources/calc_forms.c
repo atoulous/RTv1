@@ -6,7 +6,7 @@
 /*   By: atoulous <atoulous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:15:39 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/10 15:26:30 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/12 14:57:40 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ double	calc_plane(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
 	y = ray_source.y - ROBJ_ORIGIN.y;
 	z = ray_source.z - ROBJ_ORIGIN.z;
 	d = -angle_vectors(ROBJ_NORMALE, unit_vector(ROBJ_ORIGIN));
-	t = angle_vectors(ROBJ_NORMALE, ray_dir);
-	if (t != 0.000000)
+	t = angle_vectors(ray_dir, ROBJ_NORMALE);
+	if (t)
+	{
 		t = -(((ROBJ_NORMALE.x * x + ROBJ_NORMALE.y * y + ROBJ_NORMALE.z * z)
 		+ d) / t);
-	return (t > 0.000000 ? t : 0);
+		return (t > 0 ? t : 0);
+	}
+	return (0);
 }
 
 double	calc_cylinder(t_ray *ray, t_vector ray_dir, t_vector ray_source, int i)
