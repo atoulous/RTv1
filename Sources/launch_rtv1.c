@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/29 15:43:30 by atoulous          #+#    #+#             */
-/*   Updated: 2016/12/12 17:52:31 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/12/13 16:39:31 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ double	calc_shadows(t_ray *ray, t_vector ray_dir, int j)
 {
 	t_vector	ray_spot;
 	t_vector	pos_spot;
+	double		t_max;
 	double		t;
 	int			i;
 
 	pos_spot = add_vectors(ray->CAM_POS, time_vector(ray_dir, T_MIN));
-	ray_spot = unit_vector(sub_vectors(RSPOT_ORIGIN, pos_spot));
+	ray_spot = sub_vectors(RSPOT_ORIGIN, pos_spot);
+	t_max = norm_vector(ray_spot);
+	ray_spot = unit_vector(ray_spot);
 	i = -1;
 	while (++i < ray->var->nb_obj)
 	{
@@ -31,7 +34,7 @@ double	calc_shadows(t_ray *ray, t_vector ray_dir, int j)
 			t = calc_cylinder(ray, ray_spot, pos_spot, i);
 		else if (!ft_strcmp(ROBJ_TYPE, "cone") && i != T_OBJ)
 			t = calc_cone(ray, ray_spot, pos_spot, i);
-		if (t > 0.000000)
+		if (t > 0.000000 && t < t_max)
 			return (t);
 	}
 	return (0);
